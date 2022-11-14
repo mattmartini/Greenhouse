@@ -5,11 +5,11 @@ Keep trees/plants alive through the winter by providing an environment
 with stable temperature
 
 ## Equipment
-Raspberry pi 3 Model B
-Temperature Sensor DHT22
-Temperature Sensor DS18B20
-30A Relay
-Portable Heater
+- Raspberry pi 3 Model B
+- Temperature Sensor DHT22
+- Temperature Sensor DS18B20
+- 30A Relay
+- Portable Heater
 
 ## Methodology
 
