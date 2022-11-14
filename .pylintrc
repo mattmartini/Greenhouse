@@ -1,0 +1,67 @@
+[tool.pylint.main]
+
+# Use multiple processes to speed up Pylint. Specifying 0 will auto-detect the
+# number of processors available to use, and will cap the count on Windows to
+# avoid hangs.
+jobs = 0
+
+# When enabled, pylint would attempt to guess common misconfiguration and emit
+# user-friendly hints instead of false-positive error messages.
+suggestion-mode = true
+
+[tool.pylint.basic]
+
+argument-naming-style = snake_case
+
+attr-naming-style = snake_case
+# attr-rgx =
+
+bad-names = ["foo", "bar", "baz", "toto", "tutu", "tata", "l", "O", "I"]
+# bad-names-rgxs =
+
+class-attribute-naming-style = any
+# class-attribute-rgx =
+
+class-const-naming-style = UPPER_CASE
+# class-const-rgx =
+
+class-naming-style = PascalCase
+# class-rgx =
+
+const-naming-style = UPPER_CASE
+# const-rgx =
+
+function-naming-style = snake_case
+# function-rgx =
+
+# Good variable names which should always be accepted, separated by a comma.
+good-names = ["i", "j", "k", "f", "ex", "Run", "_"]
+# good-names-rgxs =
+
+# Include a hint for the correct naming format with invalid-name.
+# include-naming-hint =
+
+inlinevar-naming-style = any
+# inlinevar-rgx =
+
+method-naming-style = snake_case
+#method-rgx = "[a-z]+"
+
+module-naming-style = snake_case
+#module-rgx = "[a-z]+"
+
+# Regular expression which should only match function or class names that do not
+# require a docstring.
+no-docstring-rgx = "^_"
+
+variable-naming-style = snake_case
+#variable-rgx = "[a-z]+"
+
+[tool.pylint."messages control"]
+
+disable = E0401
+
+[tool.pylint.design]
+max-args = 8
+
+

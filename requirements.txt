@@ -1,0 +1,4 @@
+Adafruit_Blinka==8.6.1
+adafruit_circuitpython_dht==3.7.7
+board==1.0
+simple_pid==1.0.1
