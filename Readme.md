@@ -22,7 +22,7 @@ timeslicing.
 
 Temperature setpoint, PID K values, and Cycle Time kept in a config
 file. Changes to config file trigger reloading of config variables.
-Allows for on the fly tweeking of parameters.
+Allows for on-the-fly tweeking of parameters.
 
 Temperature, Humidity, and Power data are sent to initial state
 for graphing.
