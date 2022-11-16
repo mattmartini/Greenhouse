@@ -21,11 +21,11 @@ class Heater:
         GPIO.setup(self.pin, GPIO.OUT)
 
     def turn_on(self):
-        """Turn the LED on."""
+        """Turn the heater on."""
         GPIO.output(self.pin, GPIO.HIGH)
 
     def turn_off(self):
-        """Turn the LED off."""
+        """Turn the heaterLED off."""
         GPIO.output(self.pin, GPIO.LOW)
 
     def heater_cycle(self, power, cycle_time=10):
