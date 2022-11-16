@@ -1,6 +1,8 @@
 """Greenhouse Temperature Controller"""
 
 
+import signal
+
 from simple_pid import PID
 
 import config
@@ -11,7 +13,7 @@ import sensor_ds18b20
 
 __author__ = "Matt Martini"
 __email__ = "matt.martini@imaginarywave.com"
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 pid = PID(1.0, 0.0, 0.0, setpoint=60.0)
@@ -20,7 +22,7 @@ pid.auto_mode = True
 pid.proportional_on_measurement = False
 pid.differetial_on_measurement = True
 
-ctrl_config = config.Config(50, 1.876, 0.556, 2.6, 30)
+ctrl_config = config.Config(40, 1.876, 0.125, 0.6, 25)
 pid.setpoint, pid.Kp, pid.Ki, pid.Kd, pid.sample_time = ctrl_config.read_config()
 
 ds_sensor = sensor_ds18b20.SensorDS18B20()
@@ -30,7 +32,7 @@ dht_sensor = sensor_dht22.SensorDHT22()
 gh_heater = heater.Heater()
 
 streamer = data_streamer.DataStreamer(
-    temp=45.0, goal_temp=68.0, out_temp=45.0, hum=90.0, pwr=0
+    temp=45.0, goal_temp=40.0, out_temp=45.0, hum=90.0, pwr=0
 )
 
 
@@ -41,6 +43,20 @@ def cleanup():
     dht_sensor.cleanup()
 
 
+class SignalHandler:
+    """Gracefully handle a HUP signal to print data"""
+
+    hupped_now = False
+
+    def __init__(self):
+        """Initialize signal handler."""
+        signal.signal(signal.SIGHUP, self.hup_handler)
+
+    def hup_handler(self, *args):
+        """flag the hup"""
+        self.hupped_now = True
+
+
 def test():
     """Test controller."""
     cleanup()
@@ -48,6 +64,7 @@ def test():
 
 def main():
     """Controller main loop"""
+    hup_test = SignalHandler()
     while True:
         try:
             if ctrl_config.config_modified():
@@ -69,6 +86,11 @@ def main():
                 temp=temp, goal_temp=pid.setpoint, out_temp=out_temp, hum=hum, pwr=pwr
             )
             streamer.send_data()
+
+            if hup_test.hupped_now:
+                print(ctrl_config)
+                print(streamer)
+                hup_test.hupped_now = False
         except KeyboardInterrupt:
             cleanup()
     cleanup()
