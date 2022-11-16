@@ -10,6 +10,7 @@ import data_streamer
 import heater
 import sensor_dht22
 import sensor_ds18b20
+import mailer
 
 __author__ = "Matt Martini"
 __email__ = "matt.martini@imaginarywave.com"
@@ -91,6 +92,13 @@ def main():
                 print(ctrl_config)
                 print(streamer)
                 hup_test.hupped_now = False
+
+            if temp < 35.0:
+                subject = "Greenhouse Low Temperature Alert"
+                message = f"The Greenhouse temperature is {temp:3.3f} F!"
+                mail = mailer.Mailer(subject, message)
+                mail.send()
+
         except KeyboardInterrupt:
             cleanup()
     cleanup()
