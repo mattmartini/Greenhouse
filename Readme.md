@@ -28,3 +28,6 @@ Temperature, Humidity, and Power data are sent to initial state
 for graphing.
 
 Modules contain thier own tests. Call a module directly to run tests.
+
+### Note
+See the wiki for graphs of the system in use, plus descriptions of the implementation process.
