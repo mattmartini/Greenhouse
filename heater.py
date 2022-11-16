@@ -13,7 +13,7 @@ class Heater:
     """Heater with variable power output aproximated via time slicing."""
 
     def __init__(self, pin=21):
-        """Initialize LED light."""
+        """Initialize heater."""
         self.pin = pin
 
         # GPIO Setup
