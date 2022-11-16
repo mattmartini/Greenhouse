@@ -52,6 +52,16 @@ class DataStreamer:
         """Close resources."""
         self.streamer.flush()
 
+    def __str__(self):
+        """Pretty Print temperatuer data."""
+        lines = ["Temperature Data:"]
+        lines.append(f"Greenhouse Temperature: {self.temp}")
+        lines.append(f"Outside Temperature: {self.out_temp}")
+        lines.append(f"Goal Temperature: {self.goal_temp}")
+        lines.append(f"Humidity: {self.hum}")
+        lines.append(f"Power: {self.pwr}")
+        return "\n".join(lines)
+
 
 def test():
     """Read temperature from DHT22 sensor."""
@@ -65,7 +75,7 @@ def test():
     time.sleep(10)
     my_streamer.load_data(temp=47.0, goal_temp=60.0, out_temp=40.0, hum=95.0, pwr=0)
     my_streamer.send_data()
-
+    print(my_streamer)
     my_streamer.cleanup()
 
 
