@@ -89,8 +89,9 @@ def main():
             streamer.send_data()
 
             if hup_test.hupped_now:
-                print(ctrl_config)
-                print(streamer)
+                print(ctrl_config, flush=True)
+                print("\n", flush=True)
+                print(streamer, flush=True)
                 hup_test.hupped_now = False
 
             if temp < 35.0:
