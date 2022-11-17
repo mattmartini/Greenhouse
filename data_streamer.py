@@ -6,7 +6,7 @@ from ISStreamer.Streamer import Streamer
 
 __author__ = "Matt Martini"
 __email__ = "matt.martini@imaginarywave.com"
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 SENSOR_LOCATION_NAME = "Hothouse"
