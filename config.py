@@ -4,7 +4,7 @@ import os
 
 __author__ = "Matt Martini"
 __email__ = "matt.martini@imaginarywave.com"
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 
 DEFAULTCONFIGFILE = "/home/pi/greenhouse.conf"
@@ -48,7 +48,7 @@ class Config:
                     % (self.set_point, self.k_p, self.k_i, self.k_d, self.cycle_time)
                 )
         else:
-            print("Warning: using existing configuration file", self.config_file)
+            print("Warning: using existing configuration file", self.config_file, flush=True)
         self.mtime = self.stat_config()
 
     def read_config(self):
@@ -71,7 +71,7 @@ class Config:
         return False
 
     def __str__(self):
-        """Pretty Print."""
+        """Pretty Print config."""
         lines = ["Config:"]
         lines.append(f"Set Point={self.set_point}")
         lines.append(f"Cycle Time(s)={self.cycle_time}")

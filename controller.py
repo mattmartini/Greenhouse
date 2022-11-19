@@ -42,6 +42,7 @@ def cleanup():
     streamer.cleanup()
     heater.cleanup()
     dht_sensor.cleanup()
+    print("Exiting Greenhouse Temperature Control", flush=True)
 
 
 class SignalHandler:
@@ -65,6 +66,7 @@ def test():
 
 def main():
     """Controller main loop"""
+    print("Starting Greenhouse Temperature Control", flush=True)
     hup_test = SignalHandler()
     while True:
         try:
