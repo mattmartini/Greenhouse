@@ -49,14 +49,36 @@ class SignalHandler:
     """Gracefully handle a HUP signal to print data"""
 
     hupped_now = False
+    usr1_now = False
+    usr2_now = False
 
     def __init__(self):
         """Initialize signal handler."""
         signal.signal(signal.SIGHUP, self.hup_handler)
+        signal.signal(signal.SIGUSR1, self.usr1_handler)
+        signal.signal(signal.SIGUSR2, self.usr2_handler)
 
     def hup_handler(self, *args):
         """flag the hup"""
         self.hupped_now = True
+
+    def usr1_handler(self, *args):
+        """flag the usr1 signal"""
+        self.usr1_now = True
+
+    def usr2_handler(self, *args):
+        """flag the usr2 signal"""
+        self.usr2_now = True
+
+
+def toggler(value):
+    "Toggle the input true/false"
+    if value is True:
+        return False
+    elif value is False:
+        return True
+    else:
+        return value
 
 
 def test():
@@ -67,7 +89,7 @@ def test():
 def main():
     """Controller main loop"""
     print("Starting Greenhouse Temperature Control", flush=True)
-    hup_test = SignalHandler()
+    signal_test = SignalHandler()
     while True:
         try:
             if ctrl_config.config_modified():
@@ -78,6 +100,7 @@ def main():
                     pid.Kd,
                     pid.sample_time,
                 ) = ctrl_config.read_config()
+                print(ctrl_config, flush=True)
 
             out_temp = ds_sensor.read_temp()
             temp, hum = dht_sensor.read_temp()
@@ -90,11 +113,29 @@ def main():
             )
             streamer.send_data()
 
-            if hup_test.hupped_now:
+            if signal_test.hupped_now:
                 print(ctrl_config, flush=True)
                 print("\n", flush=True)
                 print(streamer, flush=True)
-                hup_test.hupped_now = False
+                signal_test.hupped_now = False
+
+            if signal_test.usr1_now:
+                pid.proportional_on_measurement = toggler(
+                    pid.proportional_on_measurement
+                )
+                print(
+                    f"proportional_on_measurement toggled to {pid.proportional_on_measurement}",
+                    flush=True,
+                )
+                signal_test.usr1_now = False
+
+            if signal_test.usr2_now:
+                pid.differetial_on_measurement = toggler(pid.differetial_on_measurement)
+                print(
+                    f"differential_on_measurement toggled to {pid.differetial_on_measurement}",
+                    flush=True,
+                )
+                signal_test.usr2_now = False
 
             if temp < 35.0:
                 subject = "Greenhouse Low Temperature Alert"
