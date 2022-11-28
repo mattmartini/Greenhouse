@@ -30,6 +30,7 @@ class SensorDHT22:
             try:
                 temp_c = self.dht_sensor.temperature
                 humidity = self.dht_sensor.humidity
+                break
             except RuntimeError:
                 time.sleep(0.5)
                 continue
