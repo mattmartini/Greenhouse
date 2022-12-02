@@ -55,7 +55,7 @@
 # logger
 - use logzero for logging
 
-# deamon
+# daemon
 - config and start daemon
 
 # main
