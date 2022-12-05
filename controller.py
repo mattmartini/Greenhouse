@@ -8,9 +8,11 @@ from simple_pid import PID
 import config
 import data_streamer
 import heater
-import sensor_dht22
 import sensor_ds18b20
+import sensor_shtc3
 import mailer
+
+# import sensor_dht22
 
 __author__ = "Matt Martini"
 __email__ = "matt.martini@imaginarywave.com"
@@ -28,7 +30,9 @@ pid.setpoint, pid.Kp, pid.Ki, pid.Kd, pid.sample_time = ctrl_config.read_config(
 
 ds_sensor = sensor_ds18b20.SensorDS18B20()
 
-dht_sensor = sensor_dht22.SensorDHT22()
+# dht_sensor = sensor_dht22.SensorDHT22()
+
+sht_sensor = sensor_shtc3.SensorSHTC3()
 
 gh_heater = heater.Heater()
 
@@ -41,7 +45,8 @@ def cleanup():
     """Close resources."""
     streamer.cleanup()
     heater.cleanup()
-    dht_sensor.cleanup()
+    # dht_sensor.cleanup()
+    sht_sensor.cleanup()
     print("Exiting Greenhouse Temperature Control", flush=True)
 
 
@@ -103,7 +108,7 @@ def main():
                 print(ctrl_config, flush=True)
 
             out_temp = ds_sensor.read_temp()
-            temp, hum = dht_sensor.read_temp()
+            temp, hum = sht_sensor.read_temp()
 
             pwr = pid(temp)
             gh_heater.heater_cycle(pwr, cycle_time=pid.sample_time)
