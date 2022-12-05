@@ -6,7 +6,8 @@ with stable temperature
 
 ## Equipment
 - Raspberry pi 3 Model B
-- Temperature Sensor DHT22
+- Temperature Sensor SHTC3
+- Temperature Sensor DHT22 - retired in favor of SHTC3
 - Temperature Sensor DS18B20
 - 30A Relay
 - Portable Heater
@@ -14,7 +15,9 @@ with stable temperature
 ## Methodology
 
 Use temperature sensors (dht22 & ds18b20) to measure inside temperature
-and humidity, and outside temperature (respectivly).
+and humidity, and outside temperature (respectivly). The shtc3 sensor
+replaces the dht22.  It is more accurate, and more importantly uses
+IC2 communication which is more reliable.
 
 Use a tuned PID controller to run a heater inside the greenhouse.
 Variable power settings (needed for PID) are aproximated via
