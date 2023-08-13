@@ -36,7 +36,10 @@ class SensorDS18B20:
         with open(self.device_file, "r", encoding="utf-8") as file:
             lines = file.readlines()
             file.close()
-            return lines
+            if bool(lines):
+                return lines
+            else:
+                return ["\n","\n"]
 
     def convert_c_to_f(self, temp_c):
         """Convert temperature from C to F"""
@@ -46,9 +49,14 @@ class SensorDS18B20:
         """Read temperature with retry."""
         lines = self.read_temp_raw()
         # Analyze if the last 3 characters are 'YES'.
+        count = 0
         while lines[0].strip()[-3:] != "YES":
             time.sleep(0.2)
             lines = self.read_temp_raw()
+            count =+ 1
+            if (count == 10):
+                print("WARNING: Failed to read temperature on ds1b20 after 10 attempts.")
+                return -99
         # Find the index of 't=' in a string.
         equals_pos = lines[1].find("t=")
         if equals_pos != -1:
