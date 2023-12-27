@@ -38,8 +38,7 @@ class SensorDS18B20:
             file.close()
             if bool(lines):
                 return lines
-            else:
-                return ["\n","\n"]
+            return ["\n", "\n"]
 
     def convert_c_to_f(self, temp_c):
         """Convert temperature from C to F"""
@@ -53,8 +52,8 @@ class SensorDS18B20:
         while lines[0].strip()[-3:] != "YES":
             time.sleep(0.2)
             lines = self.read_temp_raw()
-            count =+ 1
-            if (count == 10):
+            count += 1
+            if count == 10:
                 print("WARNING: Failed to read temperature on ds1b20 after 10 attempts.")
                 return -99
         # Find the index of 't=' in a string.
