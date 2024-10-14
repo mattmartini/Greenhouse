@@ -1,0 +1,20 @@
+[project]
+name = "Greehouse"
+version = "1.1.0"
+description = "Greenhouse Temperature Control Project"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "adafruit-blinka=8.6.1",
+    "adafruit-circuitpython-dht=3.7.7",
+    "adafruit-circuitpython-shtc3=1.1.11",
+    "board>=1.0",
+    "simple-pid=1.0.1",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "black>=24.10.0",
+    "poetry>=1.8.4",
+    "ruff>=0.6.9",
+]
