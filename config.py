@@ -44,11 +44,14 @@ class Config:
         if not os.path.isfile(self.config_file):
             with open(self.config_file, "w", encoding="utf-8") as file:
                 file.write(
-                    "%s,%s,%s,%s,%s"
-                    % (self.set_point, self.k_p, self.k_i, self.k_d, self.cycle_time)
+                    f"{self.set_point},{self.k_p},{self.k_i},{self.k_d},{self.cycle_time}"
                 )
         else:
-            print("Warning: using existing configuration file", self.config_file, flush=True)
+            print(
+                "Warning: using existing configuration file",
+                self.config_file,
+                flush=True,
+            )
         self.mtime = self.stat_config()
 
     def read_config(self):
