@@ -21,6 +21,9 @@ class Heater:
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pin, GPIO.OUT)
         GPIO.setup(self.sw_pin, GPIO.OUT)
+        # initialize heater to off
+        GPIO.output(self.pin, GPIO.LOW)
+        GPIO.output(self.sw_pin, GPIO.LOW)
 
     def turn_on(self):
         """Turn the heater on."""
